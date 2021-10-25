@@ -15,6 +15,3 @@ A tibble containing transactional data
 \description{
 Read Wells Fargo Account Statement (Checking)
 }
-\examples{
-read_wf("Checking_Account.pdf")
-}

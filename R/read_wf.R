@@ -6,10 +6,9 @@
 #' @export
 #'
 #' @examples
-#' read_wf("Checking_Account.pdf")
 read_wf <- function(file){
   # Checks ====
-  stopifnot("File must be a pdf" = str_detect(file, "pdf$"))
+  stopifnot("File must be a pdf" = stringr::str_detect(file, "pdf$"))
 
   # Define Pages and Context ====
   pages <-
