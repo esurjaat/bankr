@@ -79,7 +79,7 @@ read_wf <- function(file){
           purrr::map_df(.f =
                    ~pages %>%
                    .[[.x$page]] %>%
-                   .[.x$start:.x$end] %>%
+                   .[(.x$start + 1):.x$end] %>%
                    dplyr::tibble(text_raw = .)
           )
       )
