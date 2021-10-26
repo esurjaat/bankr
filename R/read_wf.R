@@ -55,7 +55,6 @@ read_wf <- function(file){
 
 
 
-
   # Scrape Report Date ====
   report_date <-
     pages[initial_page] %>%
@@ -151,7 +150,23 @@ read_wf <- function(file){
                   amount = amount %>% stringr::str_replace_all(",", "") %>% as.numeric())
 
 
+  # Summary ====
+  activity_summary <-
+    pages[[2]] %>%
+    .[str_which(., "Beginning balance on ")[[1]]:str_which(., "Ending balance on ")[[1]]] %>%
+    .[-4] %>%
+    tibble(text = .) %>%
+    mutate(type = c("Beginning", "Deposit", "Withdrawal", "Ending"),
+           amount = str_extract(text, pattern = "(\\$| )[0-9]+(,[0-9]+)?+\\.[0-9]{2}") %>%
+             str_replace("(\\$| )", ""),
+           date = report_date) %>%
+    select(type, amount, date)
 
-
-  temp_transactional
+  # Output ====
+  list(
+    data = temp_transactional,
+    summary = activity_summary
+      )
 }
+
+
