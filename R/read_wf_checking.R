@@ -1,12 +1,13 @@
 #' Read Wells Fargo Account Statement (Checking)
 #'
 #' @param file File path to the checking account statement PDF
+#' @param type Specifies output type. detail = transaction details. summary = statement summary
 #'
 #' @return A tibble containing transactional data
 #' @export
 #'
 #' @examples
-read_wf <- function(file){
+read_wf_checking <- function(file, type = "detail"){
   # Checks ====
   stopifnot("File must be a pdf" = stringr::str_detect(file, "pdf$"))
 
@@ -163,10 +164,12 @@ read_wf <- function(file){
     select(type, amount, date)
 
   # Output ====
-  list(
-    data = temp_transactional,
-    summary = activity_summary
-      )
+  if(type == "detail"){
+    temp_transactional
+  } else if(type == "summary"){
+    activity_summary
+  }
+
 }
 
 
